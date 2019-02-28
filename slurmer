@@ -1,0 +1,156 @@
+#!/bin/bash
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# SLURMER v1.0, updated 20190228
+#
+# SLURM sbatch facilitator. This script is meant to be run as an executable. Slurmer
+# takes in options via command line to control SLURM variables, creates a temp SLURM 
+# sbatch file, runs it, and saves logs.
+#
+# IMPORTANT: Modify anything with the [EDIT] tag before you start! Specifically:
+#
+#    + Modify 'SLURM USER INFO' to match your email, account, and partition.
+#    + Modify 'SLURM COMMAND' to match your sbatch usage. Important!
+#    + Modify 'SLURM variable defaults' to meet your expectations.
+#    + Review the 'SLURM Script' and change as you see fit.
+
+# USAGE:
+#
+#    slurmer "command" "option1" "option2"
+#
+# Up to two options can be inputted. These run before the command. 
+# For example, to run a python script in a specific environment:
+#
+#    slurmer "python /pathtofile/file.py" "source activate envname"
+#
+# OPTIONS:
+# 
+# Optional flags control SLURM variables. 
+# Default values are given in the first part of script and should be modified as seen fit.
+#
+#    -n [integer]        number of nodes
+#    -N [integer]        number of tasks per node
+#    -t H:MM:SS          walltime
+#    -m [integer]G       memory (For Mox Hyak, 128G node is 120G max, 256=248, 512=500)
+#    -d /path/           working directory
+#    -j jobname          jobname	
+#      
+# Contact: Shervin Sahba, ssahba@uw.edu, shervinsahba.com
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# SLURM USER INFO - [EDIT]
+$EMAIL=ssahba@uw.edu
+$ACCOUNT=stf
+$PARTITION=stf
+
+# SLURM COMMAND - [EDIT]
+SLURMCMD="/usr/bin/sbatch -p $PARTITION -A $ACCOUNT"
+
+# SLURM variable defaults- [EDIT]
+# These options can be modified via command line flags.
+nodes=1
+ntasks=28
+walltime=1:00:00
+memory=10G
+workdir=$PWD
+jobname=untitled
+
+# Constants used for printing logs
+HLINE=`printf '%50s\n' | tr ' ' -`		#horizontal line ----------------...
+TIMESTAMP=`date '+%Y%m%dT%H%M%S'`		#timestamp in YYYYMMDDTHHMMSS format
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Retrieve command line option flags
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+while getopts ':n:N:t:m:d:j:' flag; do
+   case "${flag}" in
+      n) nodes=${OPTARG} ;;
+      N) ntasks=${OPTARG} ;;
+      t) walltime=${OPTARG} ;;
+	  m) memory=${OPTARG} ;;
+      d) workdir=${OPTARG} ;;
+	  j) jobname=${OPTARG} ;;
+      *) "Unexpected option ${flag}" ;;
+   esac
+donenano $HOME
+#purge flags
+shift "$((OPTIND-1))"
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Retrieve slurmer variables
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+cmd=$1			# Required! This runs your job!
+opt1=$2			# Options run before your job.
+opt2=$3
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#   Create SLURM script as tempfile
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+tf=`mktemp /tmp/$TIMESTAMP-$jobname.temp`
+cat > $tf << EOF		
+#!/bin/bash
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#   SLURM Script - [EDIT]
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+## Main SLURM variables
+#SBATCH --job-name=$jobname
+#SBATCH --account=$ACCOUNT
+#SBATCH --partition=$PARTITION
+#SBATCH --nodes=$nodes   
+#SBATCH --ntasks-per-node=$ntasks
+#SBATCH --time=$walltime
+#SBATCH --mem=$memory						
+#SBATCH --workdir=$workdir
+
+## Email notification
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=$EMAIL
+
+## Export all your environment variables to the batch job session
+#SBATCH --export=all
+
+## Output important run info
+pwd; hostname; date --iso-8601=seconds
+echo "Option1: $opt1"
+echo "Option2: $opt2"
+echo "Command: $cmd"
+
+## Export your .bashrc settings
+source $HOME/.bashrc
+
+## Run job and time it
+$opt1
+$opt2
+(time $cmd | tee $workdir/$TIMESTAMP-$jobname.out)
+
+
+date --iso-8601=seconds
+
+EOF
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#    Execute the SLURM run and log it.
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+# append new run header info to submission log
+mkdir -p logs	
+echo $HLINE >> logs/submit_log
+echo $TIMESTAMP >> logs/submit_log
+echo $HLINE >> logs/submit_log
+
+# sbatch executes SLURM script, appends to submit_log
+($SLURMCMD $tf >> logs/submit_log )			
+cat $tf >> logs/submit_log
+
+#purge SLURM script
+rm -f $tf
+
+
+printf "Job slurmed up.\n"
