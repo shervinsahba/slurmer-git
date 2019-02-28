@@ -1,5 +1,8 @@
 # Hyak-SLURM
 
+Hyak and Mox Hyak are UW's computing cluster.
+https://wiki.cac.washington.edu/display/hyakusers/WIKI+for+Hyak+users
+
 
 ### slurmer v1.0, updated 20190228
 
