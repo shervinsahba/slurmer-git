@@ -1,8 +1,8 @@
 #!/bin/bash
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# SLURMER v1.0, updated 20190228
+# slurmer v1.0, updated 20190228
 #
-# SLURM sbatch facilitator. This script is meant to be run as an executable. Slurmer
+# SLURM sbatch facilitator. Slurmer is meant to be run as an executable. This script
 # takes in options via command line to control SLURM variables, creates a temp SLURM 
 # sbatch file, runs it, and saves logs.
 #
@@ -39,8 +39,8 @@
 
 # SLURM USER INFO - [EDIT]
 $EMAIL=ssahba@uw.edu
-$ACCOUNT=stf
-$PARTITION=stf
+$ACCOUNT=stf      #alternative: stf-cktp
+$PARTITION=stf    #alternative: cktp
 
 # SLURM COMMAND - [EDIT]
 SLURMCMD="/usr/bin/sbatch -p $PARTITION -A $ACCOUNT"
@@ -73,7 +73,7 @@ while getopts ':n:N:t:m:d:j:' flag; do
 	  j) jobname=${OPTARG} ;;
       *) "Unexpected option ${flag}" ;;
    esac
-donenano $HOME
+done
 #purge flags
 shift "$((OPTIND-1))"
 
