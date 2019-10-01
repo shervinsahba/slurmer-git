@@ -6,14 +6,14 @@ https://wiki.cac.washington.edu/display/hyakusers/WIKI+for+Hyak+users
 
 ## slurmer
 
-SLURM sbatch facilitator. This script is meant to be run as an executable. Slurmer
+Slurmer is a SLURM sbatch facilitator. This script is meant to be run as an executable. Slurmer
 takes in options via command line to control SLURM variables, creates a temp SLURM 
 sbatch file, and queues it.
 
 Output is redirected to ./YYYYMMDDTHHMMSS-jobname.out
 A submission log is appended at ./logs/submit_log.
 
-### Installation:
+#### Installation:
 On a Hyak build node, run
 
 ```
@@ -25,12 +25,12 @@ Now slurmer should be executable from this directory.
 I recommend moving it to a directory that's on your $PATH, 
 or create a directory and append it to $PATH in your .bashrc.
 
-### Instructions and setup:
+#### Instructions and setup:
 Run `less slurmer` to read through usage instructions.
 Make edits to match your preferred defaults.
 
 
-### Usage Example:
+#### Usage Example:
 Let's consider running a python file using a particular conda environment.
 Say I want to run `mnist_cnn.py` from [Keras examples](https://github.com/keras-team/keras/tree/master/examples). 
 With the example script downloaded to Hyak, I would run in that directory
