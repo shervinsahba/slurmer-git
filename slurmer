@@ -38,7 +38,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # SLURM USER INFO - [EDIT]
-EMAIL=ssahba@uw.edu
+EMAIL=$USER@uw.edu	#works if your hyak username is your uw netid. else change this.
 ACCOUNT=stf      #alternative: stf-cktp
 PARTITION=stf    #alternative: cktp
 
