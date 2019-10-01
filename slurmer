@@ -38,9 +38,9 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # SLURM USER INFO - [EDIT]
-$EMAIL=ssahba@uw.edu
-$ACCOUNT=stf      #alternative: stf-cktp
-$PARTITION=stf    #alternative: cktp
+$EMAIL="ssahba@uw.edu"
+$ACCOUNT="stf"      #alternative: stf-cktp
+$PARTITION="stf"    #alternative: cktp
 
 # SLURM COMMAND - [EDIT]
 SLURMCMD="/usr/bin/sbatch -p $PARTITION -A $ACCOUNT"
