@@ -106,7 +106,7 @@ cat > $tf << EOF
 #SBATCH --ntasks-per-node=$ntasks
 #SBATCH --time=$walltime
 #SBATCH --mem=$memory						
-#SBATCH --cddir=$workdir
+#SBATCH --chdir=$workdir
 
 ## Email notification
 #SBATCH --mail-type=ALL
