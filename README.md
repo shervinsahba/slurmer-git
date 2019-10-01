@@ -43,4 +43,4 @@ where "learning" is my conda environment.
 
 The job should now appear on your queue. 
 A submission log will be appended in your working directory to logs/submit_log.
-Output will appear in your working directory in a file like YYYYMMDDTHHMMSS-untitled.out
+Output will appear in your working directory in a file like YYYYMMDDTHHMMSS-untitled.out. Note that the jobname was not set, and so it is untitled. A jobname can be set via a `-j jobname` option flag. Slurmer takes several command line option flags to modify its behavior, so check them out.
