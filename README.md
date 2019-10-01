@@ -27,7 +27,7 @@ or create a directory and append it to $PATH in your .bashrc.
 
 #### Instructions and setup:
 Run `less slurmer` to read through usage instructions.
-Make edits to match your preferred defaults.
+Make edits, say via `nano slurmer` so you setup your preferred defaults.
 
 
 #### Usage Example:
