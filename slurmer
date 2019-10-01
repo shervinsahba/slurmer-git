@@ -38,9 +38,9 @@
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 # SLURM USER INFO - [EDIT]
-$EMAIL="ssahba@uw.edu"
-$ACCOUNT="stf"      #alternative: stf-cktp
-$PARTITION="stf"    #alternative: cktp
+EMAIL=ssahba@uw.edu
+ACCOUNT=stf      #alternative: stf-cktp
+PARTITION=stf    #alternative: cktp
 
 # SLURM COMMAND - [EDIT]
 SLURMCMD="/usr/bin/sbatch -p $PARTITION -A $ACCOUNT"
@@ -82,16 +82,16 @@ shift "$((OPTIND-1))"
 # Retrieve slurmer variables
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-cmd=$1			# Required! This runs your job!
-opt1=$2			# Options run before your job.
-opt2=$3
+cmd=$1			# Required! This is the job you want to run.
+opt1=$2			# Optional command 1 runs before your job.
+opt2=$3			# Optional command 2 runs before your job.
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 #   Create SLURM script as tempfile
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-tf=`mktemp /tmp/$TIMESTAMP-$jobname.temp`
+tf=`mktemp /tmp/$TIMESTAMP-$jobname.XXXXXX`
 cat > $tf << EOF		
 #!/bin/bash
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -106,7 +106,7 @@ cat > $tf << EOF
 #SBATCH --ntasks-per-node=$ntasks
 #SBATCH --time=$walltime
 #SBATCH --mem=$memory						
-#SBATCH --workdir=$workdir
+#SBATCH --cddir=$workdir
 
 ## Email notification
 #SBATCH --mail-type=ALL
