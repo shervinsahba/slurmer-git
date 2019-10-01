@@ -102,10 +102,10 @@ cat > $tf << EOF
 #SBATCH --job-name=$jobname
 #SBATCH --account=$ACCOUNT
 #SBATCH --partition=$PARTITION
-#SBATCH --nodes=$nodes   
+#SBATCH --nodes=$nodes
 #SBATCH --ntasks-per-node=$ntasks
 #SBATCH --time=$walltime
-#SBATCH --mem=$memory						
+#SBATCH --mem=$memory
 #SBATCH --chdir=$workdir
 
 ## Email notification
