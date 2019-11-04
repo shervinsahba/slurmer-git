@@ -1,34 +1,36 @@
-# Hyak-SLURM
+# slurmer
 
-Hyak and Mox Hyak are UW's computing cluster. Here's the Hyak Wiki.
-https://wiki.cac.washington.edu/display/hyakusers/WIKI+for+Hyak+users
+Slurmer makes it quick and easy to run a job on a computing cluster that uses SLURM as its job batch system. Slurmer will generate a temporary SLURM sbatch file, log its work, queue your job, and organize logs of your job's output.
+
+Run this script as an executable from command line, where you can add options in the form of flags to control SLURM variables. Options and examples are described in the header of the slurmer file.
+
+- By default the working directory is used, jobnames are set as "untitled", and the current user is sent progress emails. 
+- Output is redirected to `YYYYMMDDTHHMMSS-jobname.out`. The timestamp is similar to ISO-8601 format with year, month, and day followed by the letter T for time and then hour, minutes, and seconds. 
+- A submission log is created at `logs/submit_log`. Subsequent submissions are appended to this file.
 
 
-## slurmer
-
-Slurmer is a SLURM sbatch facilitator. This script is meant to be run as an executable. Slurmer
-takes in options via command line to control SLURM variables, creates a temp SLURM 
-sbatch file, and queues it.
-
-By default the working directory is used, jobnames are set as untitled, and the user is sent progress emails. These and other options are accessible via the command line with flags, described in the header of the slurmer file.
-
-Output is redirected to `YYYYMMDDTHHMMSS-jobname.out`. The timestamp is similar to ISO-8601 format with year, month, and day followed by the letter T for time and then hour, minutes, and seconds. 
-
-A submission log is created at `logs/submit_log`. Subsequent submissions are appended to this file.
+This script was designed with University of Washington Hyak in mind. Hyak and Mox Hyak are UW's computing cluster. Here's the [Hyak Wiki](https://wiki.cac.washington.edu/display/hyakusers/WIKI+for+Hyak+users).
 
 
 
-#### Installation:
+## Installation:
 On a Hyak build node, run
 
 ```
-wget https://raw.githubusercontent.com/shervinsahba/Hyak-SLURM/master/slurmer
-chmod +x slurmer
+wget https://raw.githubusercontent.com/shervinsahba/Hyak-SLURM/master/slurmer   # download slurmer
+chmod +x slurmer                    # make slurmer executable
 ```
 
-Now slurmer should be executable from this directory. 
-I recommend moving it to a directory that's on your $PATH, 
-or create a directory and append it to $PATH in your .bashrc.
+Now slurmer should be executable from your current directory. I recommend moving slurmer to a directory that's on your PATH, or create a directory and append it to PATH in your .bashrc. For example,
+
+```
+mkdir -p ~/bin                                  # create home bin directory if doesn't exist
+echo "export PATH=$PATH:~/bin" >> ~/.bashrc     # add ~/bin to PATH
+source ~/.bashrc                                # rerun your .bashrc to update current environment
+
+mv slurmer ~/bin
+```
+
 
 #### Instructions and setup:
 Run `less slurmer` to read through usage instructions.
