@@ -22,27 +22,25 @@ cd slurmer-git
 ```
 
 Run `./slurmer --help` to see program information and `./slurmer --settings` to see
-current defaults. If you want to configure your preferred defaults, run 
+current defaults. If you want to configure your preferred defaults, run `./config`. Feel free to edit slurmer to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request.
 
-```
-./config_slurmer
-```
 
 You probably want to link slurmer to a directory that's on your PATH, so you can
-run slurmer from the command line. For example, to link it to `~/bin`, run
+run `slurmer` from the command line. For example, to link it to `~/bin`, run
 
+```
+ln -s "$PWD/slurmer" ~/bin                   # symbolically link slurmer to ~/bin/slurmer  
+```
+
+If you don't have a bin directory for executables, make one with the following and rerun the above link command.
 ```
 mkdir -p ~/bin                               # create home bin directory if doesn't exist
 echo "export PATH=$PATH:~/bin" >> ~/.bashrc  # add ~/bin to PATH
 source ~/.bashrc                             # rerun your .bashrc to update current environment
-
-ln -s $PWD/slurmer ~/bin                     # symbolically link slurmer to ~/bin/slurmer  
 ```
 
 Now you can run slurmer from the command line as `slurmer`.
 
-
-Feel free to edit slurmer to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request.
 
 
 ## Usage
