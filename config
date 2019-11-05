@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SLURMER_FILE=slurmer
+FILE=slurmer
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # CONFIG PROGRAM
@@ -68,7 +68,7 @@ confirm_config(){
 
 
 config(){
-	cp $SLURMER_FILE slurmer.bak    # create backup
+	cp $FILE slurmer.bak    # create backup
 	tf=`mktemp /tmp/slurmer.XXXXXX` # create tempfile
 
 	sed -e "0,/^EMAIL=/{s/^EMAIL=.*/EMAIL=$EMAIL/}" \
@@ -79,9 +79,9 @@ config(){
 		-e "0,/^walltime=/{s/^walltime=.*/walltime=$walltime/}" \
 		-e "0,/^memory=/{s/^memory=.*/memory=$memory/}" \
 		-e "0,/^workdir=/{s/^workdir=.*/workdir=$workdir/}" \
-		-e "0,/^jobname=/{s/^jobname=.*/jobname=$jobname/}" $SLURMER_FILE > $tf
+		-e "0,/^jobname=/{s/^jobname=.*/jobname=$jobname/}" $FILE > $tf
 
-	cp $tf $SLURMER_FILE
+	cp $tf $FILE
 	echo "Config complete."
 }
 
