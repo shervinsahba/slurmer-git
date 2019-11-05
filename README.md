@@ -14,37 +14,38 @@ This script was designed with University of Washington Hyak in mind. Hyak and Mo
 
 
 ## Installation:
-Log into a build node and run the following.
+Log into a build node, `cd` to your desired install location, and run 
 
 ```
-wget https://raw.githubusercontent.com/shervinsahba/Hyak-SLURM/master/slurmer   # download slurmer
-chmod +x slurmer                    # make slurmer executable
+git clone https://github.com/shervinsahba/slurmer-git
+cd slurmer-git
 ```
 
-Run `slurmer --help` to see program information and `slurmer --settings` to see
-current defaults. If you want to configure your preferred defaults, run the supplementary `config_slurmer` script.
+Run `./slurmer --help` to see program information and `./slurmer --settings` to see
+current defaults. If you want to configure your preferred defaults, run 
 
 ```
-wget https://raw.githubusercontent.com/shervinsahba/Hyak-SLURM/master/config_slurmer
-bash ./config_slurmer
+./config_slurmer
 ```
 
-Now slurmer should be setup and executable from your current directory. I recommend moving slurmer to a directory that's on your PATH, or create a directory and append it to PATH in your .bashrc. For example,
+You probably want to link slurmer to a directory that's on your PATH, so you can
+run slurmer from the command line. For example, to link it to `~/bin`, run
 
 ```
-mkdir -p ~/bin                                  # create home bin directory if doesn't exist
-echo "export PATH=$PATH:~/bin" >> ~/.bashrc     # add ~/bin to PATH
-source ~/.bashrc                                # rerun your .bashrc to update current environment
+mkdir -p ~/bin                               # create home bin directory if doesn't exist
+echo "export PATH=$PATH:~/bin" >> ~/.bashrc  # add ~/bin to PATH
+source ~/.bashrc                             # rerun your .bashrc to update current environment
 
-mv slurmer ~/bin
+ln -s $PWD/slurmer ~/bin                     # symbolically link slurmer to ~/bin/slurmer  
 ```
 
+Now you can run slurmer from the command line as `slurmer`.
 
-Feel free to edit slurmer, say via `nano slurmer`, to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request.
+
+Feel free to edit slurmer to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request.
 
 
-## Usage:
-usage: 
+## Usage
 ```
 slurmer [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
         [-n number_of_nodes] [-N tasks_per_node] [-m node_memory]  
@@ -53,7 +54,7 @@ slurmer [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
 ```
 
 
-#### Example:
+### Example
 Let's consider running a python file using a particular conda environment.
 Say I want to run `mnist_cnn.py` from [Keras examples](https://github.com/keras-team/keras/tree/master/examples). 
 With the example script downloaded to Hyak, I would run in that directory
