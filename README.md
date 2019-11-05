@@ -52,6 +52,7 @@ slurmer [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
         [job command] [optional pre-command 1] [optional pre-command 2]
 ```
 
+
 #### Example:
 Let's consider running a python file using a particular conda environment.
 Say I want to run `mnist_cnn.py` from [Keras examples](https://github.com/keras-team/keras/tree/master/examples). 
