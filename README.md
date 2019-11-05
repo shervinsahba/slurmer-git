@@ -58,7 +58,7 @@ Say I want to run `mnist_cnn.py` from [Keras examples](https://github.com/keras-
 With the example script downloaded to Hyak, I would run in that directory
 
 ```
-slurmer python mnist_cnn.py" "source activate learning"
+slurmer "python mnist_cnn.py" "source activate learning"
 ```
 
 where "learning" is my conda environment. 

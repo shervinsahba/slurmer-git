@@ -73,7 +73,7 @@ User settings
 # I recommend you edit this file to set your desired defaults.
 
 # SLURM USER INFO
-EMAIL=\$USER@uw.edu
+EMAIL=$USER@uw.edu
 ACCOUNT=stf
 PARTITION=stf
 
@@ -83,7 +83,7 @@ nodes=1
 ntasks=28
 walltime=1:00:00
 memory=10G
-workdir=\$PWD
+workdir=$PWD
 jobname=untitled
 
 # Other. No need to edit these.

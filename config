@@ -7,14 +7,14 @@ SLURMER_FILE=slurmer
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 #STOCK DEFAULTS
-EMAIL='\\$USER@uw.edu'
+EMAIL='\$USER@uw.edu'
 ACCOUNT=stf
 PARTITION=stf
 nodes=1                
 ntasks=28
 walltime=1:00:00
 memory=10G
-workdir='\\$PWD'
+workdir='\$PWD'
 jobname=untitled
 
 
