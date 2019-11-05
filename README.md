@@ -67,6 +67,7 @@ The job should now appear on your queue. A submission log will be appended in yo
 
 
 ### Options
+```
 Info
   -v | --version      Slurmer version and info
   -s | --settings     Displays default settings
@@ -88,3 +89,4 @@ User settings
   -P [partition]      partition
   -E [email@host.xxx] email address for job notifications.
                        Set email to empty string for no updates.
+```
