@@ -5,18 +5,29 @@
 #
 # CONTENTS
 # 1. INFO
-# 2. DEFAULT SETTINGS [EDIT]
+# 2. DEFAULT SETTINGS
 # 3. PROCESS COMMAND LINE VARIABLES
-# 4. DEFAULT SLURM COMMAND [EDIT]
+# 4. DEFAULT SLURM COMMAND 
 # 5. SLURMER PROGRAM
 # 6. RUN SLURMER
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# Note on default values.
+#
+# Default values may be set via the separate ./config script. 
+# However, code annotated with [EDIT] may be of interest. 
+# Config suggestions...
+#    + Run ./config to see if that works for you.
+#    + Modify SLURM COMMAND to match your sbatch usage.
+#    + Modify the generated SLURM Script.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 # 1. INFO
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 
-versioninfo="Version: slurmer v1.1
+versioninfo="Version: slurmer v1.2
 Updated: 20191104
 Repo:    https://github.com/shervinsahba/
 Contact: Shervin Sahba, ssahba@uw.edu
@@ -28,6 +39,7 @@ It generates a SLURM batch file, log it, queues the job, and logs output.
 usage: $(basename "$0") [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
                 [-n number_of_nodes] [-N tasks_per_node] [-m node_memory]  
                 [-t walltime] [-d working_dir] [-j set_jobname]
+                [-A account] [-P partition] [-E email_address]
                 [job command] [optional pre-command 1] [optional pre-command 2]
 "
 
@@ -39,38 +51,37 @@ Note that the optional pre-commands run before the submitting the job.
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-OPTION FLAG DETAILS
+OPTIONS
 
-IMPORTANT:  Default values should be set by directly editting
-the slurmer script. Code annotated with [EDIT] may be of 
-interest to users. Config suggestions...
-   + Modify SLURM USER INFO to match email, 
-     account, and partition.
-   + Modify SLURM COMMAND to match your sbatch usage.
-   + Modify SLURM variable defaults to quickly run jobs.
-   + Review the generated SLURM Script.
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+Info
+  -v | --version      Slurmer version and info
+  -s | --settings     Displays default settings
 
-SLURM variables
-   -n [integer]        number of nodes
-   -N [integer]        number of tasks per node
-   -t H:MM:SS          walltime
-   -m [integer]G       memory (e.g. Mox Hyak, 128G node is 120G max, 256=248, 512=500)
+Cluster and job variables
+  -n [integer]        number of nodes
+  -N [integer]        number of tasks per node
+  -t [H:MM:SS]        walltime
+  -m [integer]G       memory (Request less than node max.
+                              e.g. On Mox Hyak, 128G node is 
+                              120G max, 256 is 248, 512 is 500)
+  -d [/...path/]      working directory
+  -j [jobname]        jobname	
 
-Job variables
-   -d /path/           working directory
-   -j jobname          jobname	
+  -D | --dryrun       executes a dryrun, prints slurm batch file
 
 User settings
-   -A account          account
-   -p partition        partition
-   -E email@host.xxx   email address for job notifications
+  -A [account]        account
+  -P [partition]      partition
+  -E [email@host.xxx] email address for job notifications.
+                       Set email to empty string for no updates.
 "
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# 2. DEFAULT SETTINGS [EDIT]
+# 2. DEFAULT SETTINGS 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-# I recommend you edit this file to set your desired defaults.
+# You can edit these via the ./config script.
 
 # SLURM USER INFO
 EMAIL=$USER@uw.edu
@@ -139,13 +150,13 @@ while getopts ':n:N:t:m:d:j:A:p:E:hvsD' flag; do
       n) nodes=${OPTARG} ;;
       N) ntasks=${OPTARG} ;;
       t) walltime=${OPTARG} ;;
-	  m) memory=${OPTARG} ;;
+	    m) memory=${OPTARG} ;;
       d) workdir=${OPTARG} ;;
-	  j) jobname=${OPTARG} ;;
-	  A) ACCOUNT=${OPTARG} ;;
-      p) PARTITION=${OPTARG} ;;
+	    j) jobname=${OPTARG} ;;
+	    A) ACCOUNT=${OPTARG} ;;
+      P) PARTITION=${OPTARG} ;;
       E) EMAIL=${OPTARG} ;;
-	  D) DRYRUN=true;;
+	    D) DRYRUN=true;;
       *) "Unexpected option ${flag}" 
          exit 1 ;;
    esac
