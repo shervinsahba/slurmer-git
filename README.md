@@ -42,12 +42,12 @@ source ~/.bashrc                             # rerun your .bashrc to update curr
 Now you can run slurmer from the command line as `slurmer`.
 
 
-
 ## Usage
 ```
 slurmer [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
         [-n number_of_nodes] [-N tasks_per_node] [-m node_memory]  
         [-t walltime] [-d working_dir] [-j set_jobname]
+        [-A account] [-P partition] [-E email_address]
         [job command] [optional pre-command 1] [optional pre-command 2]
 ```
 
@@ -58,9 +58,33 @@ Say I want to run `mnist_cnn.py` from [Keras examples](https://github.com/keras-
 With the example script downloaded to Hyak, I would run in that directory
 
 ```
-slurmer "python mnist_cnn.py" "source activate learning"
+slurmer "python mnist_cnn.py" "source activate env_name"
 ```
 
-where "learning" is my conda environment. 
+where "env_name" is my conda environment. 
 
 The job should now appear on your queue. A submission log will be appended in your working directory to `logs/submit_log`. Output will appear in a timestamped file like `20191001T130001-untitled.out` if it was submitted on October 1, 2019 at 1:00:01PM. Note that the jobname was not set, and so it is untitled. A jobname can be set via a `-j jobname` option flag. Slurmer takes several command line option flags to modify its behavior, so check them out with the `--help` option.
+
+
+### Options
+Info
+  -v | --version      Slurmer version and info
+  -s | --settings     Displays default settings
+
+Cluster and job variables
+  -n [integer]        number of nodes
+  -N [integer]        number of tasks per node
+  -t [H:MM:SS]        walltime
+  -m [integer]G       memory (Request less than node max.
+                              e.g. On Mox Hyak, 128G node is 
+                              120G max, 256 is 248, 512 is 500)
+  -d [/...path/]      working directory
+  -j [jobname]        jobname	
+
+  -D | --dryrun       executes a dryrun, prints slurm batch file
+
+User settings
+  -A [account]        account
+  -P [partition]      partition
+  -E [email@host.xxx] email address for job notifications.
+                       Set email to empty string for no updates.

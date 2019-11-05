@@ -53,8 +53,6 @@ Note that the optional pre-commands run before the submitting the job.
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 OPTIONS
 
-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 Info
   -v | --version      Slurmer version and info
   -s | --settings     Displays default settings
