@@ -1,0 +1,112 @@
+#!/bin/bash
+
+SLURMER_FILE=slurmer
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# CONFIG PROGRAM
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+#STOCK DEFAULTS
+EMAIL='\\$USER@uw.edu'
+ACCOUNT=stf
+PARTITION=stf
+nodes=1                
+ntasks=28
+walltime=1:00:00
+memory=10G
+workdir='\\$PWD'
+jobname=untitled
+
+
+display_settings(){
+	printf "Here are your proposed settings:
+	EMAIL     $EMAIL
+	ACCOUNT   $ACCOUNT
+	PARTITION $PARTITION
+	nodes     $nodes
+	ntasks    $ntasks
+	walltime  $walltime
+	memory    $memory
+	workdir   $workdir
+	jobname   $jobname
+	"
+}
+
+
+wizard(){
+	read -p "Enter email (e.g $EMAIL): " EMAIL
+	read -p "Enter cluster account (e.g $ACCOUNT): " ACCOUNT
+	read -p "Enter cluster partition (e.g $PARTITION): " PARTITION
+	read -p "Enter nodes (e.g $nodes): " nodes
+	read -p "Enter ntasks (e.g $ntasks): " ntasks
+	read -p "Enter walltime (e.g $walltime): " walltime
+	read -p "Enter node memory (e.g $memory): " memory
+	read -p "Enter working directory (e.g $workdir): " workdir
+	read -p "Enter default jobname (e.g $jobname): " jobname
+
+	confirm_config
+	echo "Your settings were committed."
+}
+
+
+reset(){
+	echo "Reset to stock settings."
+	confirm_config
+}
+
+
+confirm_config(){
+	display_settings
+	echo
+	read -p "Confirm configuration [y|n]?" confirm
+	case $confirm in
+		y | yes | Y ) config ;;
+		n | no | N ) echo "No changes made."; exit 0 ;;
+        *) echo "Not a valid option. Try again." ; exit 1
+	esac
+}
+
+
+config(){
+	cp $SLURMER_FILE slurmer.bak    # create backup
+	tf=`mktemp /tmp/slurmer.XXXXXX` # create tempfile
+
+	sed -e "0,/^EMAIL=/{s/^EMAIL=.*/EMAIL=$EMAIL/}" \
+		-e "0,/^ACCOUNT=/{s/^ACCOUNT=.*/ACCOUNT=$ACCOUNT/}" \
+		-e "0,/^PARTITION=/{s/^PARTITION=.*/PARTITION=$PARTITION/}" \
+		-e "0,/^nodes=/{s/^nodes=.*/nodes=$nodes/}" \
+		-e "0,/^ntasks=/{s/^ntasks=.*/ntasks=$ntasks/}" \
+		-e "0,/^walltime=/{s/^walltime=.*/walltime=$walltime/}" \
+		-e "0,/^memory=/{s/^memory=.*/memory=$memory/}" \
+		-e "0,/^workdir=/{s/^workdir=.*/workdir=$workdir/}" \
+		-e "0,/^jobname=/{s/^jobname=.*/jobname=$jobname/}" $SLURMER_FILE > $tf
+
+	cp $tf $SLURMER_FILE
+	echo "Config complete."
+}
+
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+# RUN CONFIG
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+
+printf "Choose your option: 
+    1. [config] Run slurmer configuration.
+    2. [reset]  Reset slurmer to stock settings
+    3. [exit]   Exit
+"
+
+read -p "What do you want to do? " option
+
+case $option in
+ 	1 | config ) wizard ;;
+	2 | reset ) reset ;;
+	3 | exit | *) echo "Exiting. No changes made."; exit 0 ;;
+esac 
+
+
+
+
+
+
+

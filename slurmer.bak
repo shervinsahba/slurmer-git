@@ -73,18 +73,18 @@ User settings
 # I recommend you edit this file to set your desired defaults.
 
 # SLURM USER INFO
-EMAIL=\$USER@uw.edu
-ACCOUNT=stf
-PARTITION=stf
+EMAIL=af
+ACCOUNT=a
+PARTITION=ga
 
 # SLURM variable defaults
 # These options can be modified via command line flags.
-nodes=1
-ntasks=28
-walltime=1:00:00
-memory=10G
-workdir=\$PWD
-jobname=untitled
+nodes=ga
+ntasks=ga
+walltime=ga
+memory=g
+workdir=ag
+jobname=
 
 # Other. No need to edit these.
 TIMESTAMP=`date '+%Y%m%dT%H%M%S'`	# timestamp in YYYYMMDDTHHMMSS format
