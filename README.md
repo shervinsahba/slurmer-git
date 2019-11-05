@@ -13,7 +13,7 @@ This script was designed with University of Washington Hyak in mind. Hyak and Mo
 
 
 
-## Installation:
+## Installation
 Log into a build node, `cd` to your desired install location, and run 
 
 ```
