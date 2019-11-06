@@ -20,6 +20,9 @@ jobname=untitled
 
 display_settings(){
 	printf "Here are your proposed settings:
+(Note that bash interpretable vars like \$USER or \$PWD must be escaped by a \\
+to be passed into slurmer. That is, if you want \$USER to be set in slurmer,
+you must pass in \\\$USER.)
 	EMAIL     $EMAIL
 	ACCOUNT   $ACCOUNT
 	PARTITION $PARTITION

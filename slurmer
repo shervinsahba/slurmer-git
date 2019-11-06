@@ -100,7 +100,9 @@ TIMESTAMP=`date '+%Y%m%dT%H%M%S'`	# timestamp in YYYYMMDDTHHMMSS format
 DRYRUN=false                        # dry run the slurm job
 
 display_default_settings(){
-	printf "Default Settings:
+	printf "Current Settings:
+(Note that bash interpretable vars like \$USER or \$PWD are substituted below,
+so these are the settings that would pass to slurmer if run now.)
 	EMAIL     $EMAIL
 	ACCOUNT   $ACCOUNT
 	PARTITION $PARTITION
@@ -110,7 +112,7 @@ display_default_settings(){
 	memory    $memory
 	workdir   $workdir
 	jobname   $jobname
-	"
+  "
 }
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#

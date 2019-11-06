@@ -18,14 +18,30 @@ Log into a build node, `cd` to your desired install location, and run
 
 ```
 git clone https://github.com/shervinsahba/slurmer-git
-cd slurmer-git
 ```
 
-Run `./slurmer --help` to see program information and `./slurmer --settings` to see
-current defaults. If you want to configure your preferred defaults, run `./config`. Feel free to edit slurmer to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request.
+To check if the software works, run
+```
+cd slurmer-git
+./slurmer
+```
 
+The help dialog can be called with
 
-You probably want to link slurmer to a directory that's on your PATH, so you can
+`./slurmer --help` 
+
+### Config default settings
+Run `./slurmer --settings` to view the current settings. These settings ought to be okay for UW Hyak users on stf accounts, but you may wish to modify them later to tailor it to your workflow. If you do not use UW Hyak on stf, you'll need to run config.
+
+To config your stock settings, run
+
+```
+./config
+```
+and follow the setup wizard. You can use this utility to reset to stock settings too.
+
+### Link slurmer to make it run from command line
+You'll want to link slurmer to a directory that's on your PATH, so you can
 run `slurmer` from the command line. For example, to link it to `~/bin`, run
 
 ```
@@ -41,6 +57,10 @@ source ~/.bashrc                             # rerun your .bashrc to update curr
 
 Now you can run slurmer from the command line as `slurmer`.
 
+### Improving slurmer
+Feel free to edit slurmer to tweak further options. This may be necessary if you are not a UW Hyak user. To propose improvements, please open an Issue or Pull Request here.
+
+
 
 ## Usage
 ```
@@ -50,6 +70,9 @@ slurmer [-h | --help] [-v | --version] [-D | --dryrun] [-s | --settings]
         [-A account] [-P partition] [-E email_address]
         [job command] [optional pre-command 1] [optional pre-command 2]
 ```
+
+Slurmer will automatically send compute updates via SLURM, if you've provided your email address.
+To silence updates, run it with `-E ""`, or run config and set your email address as `""`.
 
 
 ### Example
@@ -69,6 +92,7 @@ The job should now appear on your queue. A submission log will be appended in yo
 ### Options
 ```
 Info
+  -h | --help      	  Help
   -v | --version      Slurmer version and info
   -s | --settings     Displays default settings
 
