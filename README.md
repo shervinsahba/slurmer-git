@@ -33,7 +33,7 @@ The help dialog can be called with
 ### Config default settings
 Run `./slurmer --settings` to view the current settings. These settings ought to be okay for UW Hyak users on stf accounts, but you may wish to modify them later to tailor it to your workflow. If you do not use UW Hyak on stf, you'll need to run config.
 
-To config your stock settings, run
+To config the default settings, run
 
 ```
 ./config
